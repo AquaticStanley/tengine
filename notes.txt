@@ -1,0 +1,37 @@
+Component system
+
+Physics/Input/Graphics
+
+Pipeline design pattern?
+
+References for downstream patterns?
+
+Physics/Input seem to be one entity, or world could take care of physics
+
+Input influences things that are going to happen, which are always paired with what actually happens?
+
+Why would the input component not directly change the physics component?
+ - We would separate for the other reason of extendability
+ - There's some inherent overlap still
+
+What should be the observation structure of these components?
+ - Metadata should be uninvolved with any part and just used for engine-specific miscellaneous knowledge on that specific instantiation of an object
+ - Graphics should have a reference to the physics component as it's directly dependent on it
+
+
+
+ - The physics component should not ever change the input component, the input component should change the physics component
+ - What kind of relationship does that exhibit?
+
+ - Should physics have a reference to the input component? -> No, the input component must change the physics component when necessary
+ - Should the input component have a reference to the physics component? -> Not a bad idea!
+
+
+ Should the components take the other components in the constructor, or should the gameobject simply pass these through?
+
+ -Can we put variables in abstract base classes? (physics component common stuff)
+
+Where should player state be handled/stored? (Crouching, jumping, etc)
+- Probably stored in physics, altered in input as with many other things
+
+implement gameobject operator bool for deletion
