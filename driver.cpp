@@ -1,6 +1,6 @@
 #include <iostream>
-#include "World.h"
+#include "GameLoop.h"
 
 int main() {
-  World world;
+
 }

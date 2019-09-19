@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MetaData.h"
+#include "Interfaces/MetaData.h"
 #include "Interfaces/PhysicsComponent.h"
 #include "Interfaces/InputComponent.h"
 #include "Interfaces/GraphicsComponent.h"
