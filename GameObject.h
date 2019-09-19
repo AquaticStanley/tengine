@@ -1,9 +1,9 @@
 #pragma once
 
 #include "MetaData.h"
-#include "PhysicsComponent.h"
-#include "InputComponent.h"
-#include "GraphicsComponent.h"
+#include "Interfaces/PhysicsComponent.h"
+#include "Interfaces/InputComponent.h"
+#include "Interfaces/GraphicsComponent.h"
 
 class GameObject {
 public:
@@ -11,6 +11,7 @@ public:
 
 public:
   MetaData* metadata_;
+
   PhysicsComponent* physics_;
   InputComponent* input_;
   GraphicsComponent* graphics_;
