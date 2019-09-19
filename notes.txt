@@ -35,3 +35,43 @@ Where should player state be handled/stored? (Crouching, jumping, etc)
 - Probably stored in physics, altered in input as with many other things
 
 implement gameobject operator bool for deletion
+
+What should hold on to specific gameobject data? like cooldown information or inventory?
+- Should probably be its own component; the physics component can be in charge of updating it though
+
+What kind of thing would go in game data but not meta data or physics data?
+- Meta data should hold data used by the game engine itself, such as id, deletion status,
+
+Does every GameObject even need a GameData component?
+- No, it wouldn't make sense for a piece of shrubbery to have an inventory
+
+Should we make this GameData not part of the base?
+
+Conclusion: If physics is going to be in charge of updating it, the specific physics component should have a specific game data component associated with it; it has no business being in the base gameobject class imo.
+
+
+
+============================
+
+Does it make sense to loop over the physics components and call update(*this), passing in world to the update function?
+
+Or should we do:
+
+for(GO& object : objects) {
+  update(object->physics);
+}
+
+Can't do that as we don't know what the physics object implements; must pass control to the object being updated, as he has the most context of what he can do.
+
+Is there any way to make that work? It really is better from a conceptual standpoint.
+
+Should we have an observer pointer to other components? It seems that if we have a reference, it will be impossible to hot-swap components.
+
+Or should we disallow hot swapping while enforcing new object creation when this happens?
+
+Store a reference to the base object to only use with getPhysicsComponent() ?
+
+Inherit from an object with access to the base object
+
+
+When swapping out components in the base object, the base object must forward the new addresses to all members of the class interested

@@ -9,10 +9,19 @@ class GameObject {
 public:
   GameObject();
 
-public:
-  MetaData* metadata_;
+  GameObject(std::unique_ptr<MetaData> metadata,
+             std::unique_ptr<PhysicsComponent> physics,
+             std::unique_ptr<InputComponent> input,
+             std::unique_ptr<GraphicsComponent> graphics)
+  : metadata_(std::move(metadata))
+  , physics_(std::move(physics))
+  , input_(std::move(input))
+  , graphics_(std::move(graphics))
+  {}
 
-  PhysicsComponent* physics_;
-  InputComponent* input_;
-  GraphicsComponent* graphics_;
+public:
+  std::unique_ptr<MetaData> metadata_;
+  std::unique_ptr<PhysicsComponent> physics_;
+  std::unique_ptr<InputComponent> input_;
+  std::unique_ptr<GraphicsComponent> graphics_;
 };

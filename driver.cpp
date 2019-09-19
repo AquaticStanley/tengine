@@ -1,6 +1,6 @@
 #include <iostream>
-#include "GameObject.h"
+#include "World.h"
 
 int main() {
-  std::cout << "test" << std::endl;
+  World world;
 }
