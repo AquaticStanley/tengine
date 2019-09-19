@@ -11,6 +11,9 @@ public:
 
   virtual void update(Graphics& graphics, double frameProgress) = 0;
 
+  const sf::Vector2f& position() { return physics_->position_; }
+  const sf::Vector2f& velocity() { return physics_->velocity_; }
+
 protected:
   const PhysicsComponent* physics_;
 };

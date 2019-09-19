@@ -91,3 +91,13 @@ At some point, I should convert all spaces to 4 spaces (maybe tabs for anarchy)
 
 Where should the shouldBeRemoved variable be stored?
 -It makes sense to live in metadata, but it's set in physics
+-It should live in physics as the alternative is much more confusing for the user
+
+In terms of constants usable to component classes, what I could do is this:
+I could have a file that includes all of the component files to do it quickly from the factory
+All of the component files could include another file that contains constants for that component
+
+But honestly it seems like it's more useful to just explicitly include them from the factory, as if there were, for example, more than three components and some expectation of swapping them out.
+
+However, the factory wouldn't be the one swapping out... so what should we do?
+What does swapping out components even look like?
