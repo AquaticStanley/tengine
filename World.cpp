@@ -13,8 +13,8 @@ void World::updatePhysics() {
   }
 
   // Remove dead entities
-  // entities_.erase(std::remove_if(entities_.begin(), entities_.end(), 
-  //   [](GameObject& o) { return o->metadata_->shouldBeRemoved_; }), entities_.end());
+  entities_.erase(std::remove_if(entities_.begin(), entities_.end(),
+    [](const GameObject& o) { return o.physics_->toBeRemoved_; }), entities_.end());
 }
 
 void World::render(double frameProgress, Graphics& graphics) {
