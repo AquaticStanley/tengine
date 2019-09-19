@@ -5,6 +5,8 @@
 #include "Interfaces/InputComponent.h"
 #include "Interfaces/GraphicsComponent.h"
 
+class World;
+
 class GameObject {
 public:
   GameObject();
@@ -24,4 +26,10 @@ public:
   std::unique_ptr<PhysicsComponent> physics_;
   std::unique_ptr<InputComponent> input_;
   std::unique_ptr<GraphicsComponent> graphics_;
+
+  void updateInput() { input_->update(); }
+
+  void updatePhysics(World& world) { physics_->update(world); }
+
+  void updateGraphics(Graphics& graphics, double frameProgress) { graphics_->update(graphics, frameProgress); }
 };

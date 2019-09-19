@@ -10,7 +10,7 @@ void Graphics::draw(sf::Vector2f position, sf::Vector2f hitbox, sf::Color color)
 
   rectangle.setPosition(position);
 
-  window->draw(rectangle);
+  window_->draw(rectangle);
   return;
 }
 
@@ -27,10 +27,10 @@ void Graphics::draw(sf::Vector2f position, sf::Vector2f hitbox, sf::Sprite sprit
   //Scale if necessary
   sprite.scale(hitbox.x / sprite.getTextureRect().width, hitbox.y / sprite.getTextureRect().height);
 
-  window->draw(sprite);
+  window_->draw(sprite);
   return;
 }
 
 sf::Vector2f Graphics::translatePosition(sf::Vector2f position) {
-  return sf::Vector2f(position.x, window->getSize().y - position.y);
+  return sf::Vector2f(position.x, window_->getSize().y - position.y);
 }

@@ -88,3 +88,6 @@ Graphics:
 
 
 At some point, I should convert all spaces to 4 spaces (maybe tabs for anarchy)
+
+Where should the shouldBeRemoved variable be stored?
+-It makes sense to live in metadata, but it's set in physics

@@ -6,10 +6,13 @@
 class World {
 public:
   World() {}
-
-  std::vector<GameObject> entities_;
+  World(std::vector<GameObject> entities) : entities_(std::move(entities)) {}
 
   void processInput();
-
   void updatePhysics();
+  void render(double frameProgress, Graphics& graphics);
+
+  // void addEntities(std::vector<GameObject> entities);
+
+  std::vector<GameObject> entities_;
 };
