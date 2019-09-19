@@ -75,3 +75,16 @@ Inherit from an object with access to the base object
 
 
 When swapping out components in the base object, the base object must forward the new addresses to all members of the class interested
+
+
+
+==========
+Graphics:
+
+-Graphics window should be a class holding onto a sf::draw_window or whatever, and should call utility functions provided in the Graphics namespace, passing in its window when needed
+
+- This allows for testability in the graphics library
+
+
+
+At some point, I should convert all spaces to 4 spaces (maybe tabs for anarchy)

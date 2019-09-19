@@ -12,6 +12,6 @@ public:
 
   virtual void update() = 0;
 
-private:
+protected:
   PhysicsComponent* physics_;
 };

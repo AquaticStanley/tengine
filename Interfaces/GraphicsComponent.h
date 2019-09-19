@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Graphics/Graphics.h"
 #include "PhysicsComponent.h"
 
 class GraphicsComponent {
@@ -8,8 +9,8 @@ public:
 
   virtual ~GraphicsComponent() {}
 
-  virtual void update() = 0;
+  virtual void update(Graphics& graphics, double frameProgress) = 0;
 
-private:
+protected:
   const PhysicsComponent* physics_;
 };
