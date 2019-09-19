@@ -8,9 +8,9 @@ void World::processInput() {
 
 void World::updatePhysics() {
   // Update physics of each entity
-  // for(auto& entity : entities_) {
-  //   entity.updatePhysics(*this);
-  // }
+  for(auto& entity : entities_) {
+    entity.updatePhysics(*this);
+  }
 
   // Remove dead entities
   // entities_.erase(std::remove_if(entities_.begin(), entities_.end(), 
@@ -18,10 +18,13 @@ void World::updatePhysics() {
 }
 
 void World::render(double frameProgress, Graphics& graphics) {
-  (void)frameProgress;
-  (void)graphics;
+  for(auto& entity : entities_) {
+    entity.updateGraphics(graphics, frameProgress);
+  }
 }
 
-// void World::addEntities(std::vector<GameObject> entities) {
-
-// }
+void World::addEntities(std::vector<GameObject>& entities) {
+  for(auto& entity : entities) {
+    entities_.emplace_back(std::move(entity));
+  }
+}

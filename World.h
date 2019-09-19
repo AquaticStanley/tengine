@@ -12,7 +12,7 @@ public:
   void updatePhysics();
   void render(double frameProgress, Graphics& graphics);
 
-  // void addEntities(std::vector<GameObject> entities);
+  void addEntities(std::vector<GameObject>& entities);
 
   std::vector<GameObject> entities_;
 };
