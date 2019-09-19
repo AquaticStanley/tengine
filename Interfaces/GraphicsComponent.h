@@ -4,7 +4,9 @@
 
 class GraphicsComponent {
 public:
-  GraphicsComponent(const std::unique_ptr<PhysicsComponent> physics) : physics_(physics.get()) {}
+  GraphicsComponent(const std::unique_ptr<PhysicsComponent>& physics) : physics_(physics.get()) {}
+
+  virtual ~GraphicsComponent() {}
 
   virtual void update() = 0;
 

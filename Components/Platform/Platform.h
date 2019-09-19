@@ -4,15 +4,18 @@
 
 class PlatformPhysicsComponent : public PhysicsComponent {
 public:
-  virtual void update(World& world);
+  PlatformPhysicsComponent(sf::Vector2f position, sf::Vector2f hitbox) : PhysicsComponent(position, hitbox) {}
+  virtual void update(World& world) {}
 };
 
 class PlatformInputComponent : public InputComponent {
 public:
-  virtual void update();
+  PlatformInputComponent(const std::unique_ptr<PhysicsComponent>& physics) : InputComponent(physics) {}
+  virtual void update() {}
 };
 
 class PlatformGraphicsComponent : public GraphicsComponent {
 public:
-  virtual void update();
+  PlatformGraphicsComponent(const std::unique_ptr<PhysicsComponent>& physics) : GraphicsComponent(physics) {}
+  virtual void update() {}
 };

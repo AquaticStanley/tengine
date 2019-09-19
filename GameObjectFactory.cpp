@@ -3,11 +3,11 @@
 namespace GOFactory {
 
 GameObject createPlatform(sf::Vector2f position, sf::Vector2f hitbox) {
-    std::unique_ptr<MetaData> metadata = std::make_unique(MetaData(1));
-    std::unique_ptr<PlatformPhysicsComponent> physics = std::make_unique(PlatformPhysicsComponent(position, hitbox));
-    std::unique_ptr<PlatformInputComponent> input = std::make_unique(PlatformInputComponent(physics));
-    std::unique_ptr<GraphicsComponent> graphics = std::make_unique(PlatformGraphicsComponent(physics));
-    return GameObject(metadata, physics, input, graphics)
+    std::unique_ptr<MetaData> metadata = std::make_unique<MetaData>(MetaData(1));
+    std::unique_ptr<PhysicsComponent> physics = std::make_unique<PlatformPhysicsComponent>(PlatformPhysicsComponent(position, hitbox));
+    std::unique_ptr<InputComponent> input = std::make_unique<PlatformInputComponent>(PlatformInputComponent(physics));
+    std::unique_ptr<GraphicsComponent> graphics = std::make_unique<PlatformGraphicsComponent>(PlatformGraphicsComponent(physics));
+    return GameObject(std::move(metadata), std::move(physics), std::move(input), std::move(graphics));
 }
 
 }

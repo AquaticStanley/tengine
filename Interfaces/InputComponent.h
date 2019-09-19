@@ -8,6 +8,8 @@ class InputComponent {
 public:
   InputComponent(const std::unique_ptr<PhysicsComponent>& physics) : physics_(physics.get()) {}
 
+  virtual ~InputComponent() {}
+
   virtual void update() = 0;
 
 private:
