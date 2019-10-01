@@ -3,6 +3,18 @@
 #include <vector>
 #include "GameObject.h"
 
+namespace WorldConstants {
+  // World Constants
+  // Units/second
+  const float WORLD_X_SPEED_LIMIT = 3.0;
+
+  // Units/second
+  const float WORLD_Y_SPEED_LIMIT = 7.0;
+
+  // Units/second^2
+  const float WORLD_GRAVITY_ACCELERATION = -0.05;
+}
+
 class World {
 public:
   World() {}

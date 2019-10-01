@@ -5,7 +5,7 @@
 #include "GameObject.h"
 
 // Entity dependencies
-// #include "Components/Player/Player.h"
+#include "Components/Player/Player.h"
 #include "Components/Platform/Platform.h"
 
 namespace GOFactory {

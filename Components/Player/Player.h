@@ -21,16 +21,31 @@ public:
   virtual void update(World& world);
 
 public:
+  bool canMove_;
   bool facingRight_;
   bool walkingRight_;
   bool walkingLeft_;
-  bool canMove_;
+  bool floatingRight_;
+  bool floatingLeft_;
+  bool isOnGround_;
+  bool jumpIP_;
+  bool jumping_;
+
+public:
+  // State mutation functions
+  void setWalkingRight();
+  void setWalkingLeft();
+  void setFloatingRight();
+  void setFloatingLeft();
+  void clearLeftRight();
+  bool isIdle();
 };
 
 class PlayerInputComponent : public InputComponent {
 public:
   PlayerInputComponent(const std::unique_ptr<PhysicsComponent>& physics)
   : InputComponent(physics)
+  , physics_(static_cast<PlayerPhysicsComponent*>(InputComponent::physics_))
   , key_right(sf::Keyboard::Key::Right)
   , key_left(sf::Keyboard::Key::Left)
   , key_space(sf::Keyboard::Key::Space)
@@ -39,6 +54,8 @@ public:
   virtual void update();
 
 private:
+  PlayerPhysicsComponent* physics_;
+
   // Key bindings to reassign at will
   sf::Keyboard::Key key_right;
   sf::Keyboard::Key key_left;

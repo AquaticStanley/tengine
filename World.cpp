@@ -10,6 +10,9 @@ void World::updatePhysics() {
   // Update physics of each entity
   for(auto& entity : entities_) {
     entity.updatePhysics(*this);
+
+    // Resolve all objects after this entity changed
+    
   }
 
   // Remove dead entities
