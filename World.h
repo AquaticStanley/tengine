@@ -28,7 +28,7 @@ public:
 
   void resolveCollision(PhysicsComponent* physics);
 
-  void resolvePlayerCollision(PlayerPhysicsComponent* physics);
+  // void resolvePlayerCollision(PlayerPhysicsComponent* physics);
 
   // Add generic resolveCollision for other things
 
