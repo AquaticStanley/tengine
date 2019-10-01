@@ -3,6 +3,7 @@
 void PlayerPhysicsComponent::update(World& world) {
     using namespace CompConstants::Player;
 
+    // Modify horizontal movement
     if(walkingRight_) {
         PhysicsComponent::velocity_.x += WALK_ACCELERATION_GROUND;
     } else if(walkingLeft_) {
@@ -27,8 +28,26 @@ void PlayerPhysicsComponent::update(World& world) {
         }
     }
 
+    // Modify vertical movement
+    if(jumping_ && !jumpIP_ && isOnGround_) {
+        PhysicsComponent::velocity_.y += JUMP_VELOCITY;
+        isOnGround_ = false;
+        jumpIP_ = true;
+        jumping_ = false;
+    }
+
+    // Apply gravity acceleration
+    if(isOnGround_) {
+        PhysicsComponent::velocity_.y = 0;
+    } else {
+        PhysicsComponent::velocity_.y += WorldConstants::WORLD_GRAVITY_ACCELERATION;
+    }
+
     // Set player position due to velocity changes
     PhysicsComponent::position_ += PhysicsComponent::velocity_;
+
+    // Resolve world collision
+    world.resolveCollision(this);
 
     return;
 }

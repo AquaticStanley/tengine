@@ -24,6 +24,8 @@ public:
   void updatePhysics();
   void render(double frameProgress, Graphics& graphics);
 
+  void resolveCollision(PhysicsComponent* physics);
+
   void addEntities(std::vector<GameObject>& entities);
 
   std::vector<GameObject> entities_;

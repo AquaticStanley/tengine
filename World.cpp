@@ -12,7 +12,7 @@ void World::updatePhysics() {
     entity.updatePhysics(*this);
 
     // Resolve all objects after this entity changed
-    
+
   }
 
   // Remove dead entities
@@ -24,6 +24,10 @@ void World::render(double frameProgress, Graphics& graphics) {
   for(auto& entity : entities_) {
     entity.updateGraphics(graphics, frameProgress);
   }
+}
+
+void World::resolveCollision(PhysicsComponent* physics) {
+    
 }
 
 void World::addEntities(std::vector<GameObject>& entities) {
