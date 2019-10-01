@@ -27,7 +27,7 @@ void World::render(double frameProgress, Graphics& graphics) {
   }
 }
 
-void World::resolveCollision(PhysicsComponent* physics) {
+void World::resolveNormalCollision(PhysicsComponent* physics) {
     
 }
 

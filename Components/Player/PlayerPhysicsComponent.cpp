@@ -14,13 +14,13 @@ void PlayerPhysicsComponent::update(World& world) {
         PhysicsComponent::velocity_.x -= WALK_ACCELERATION_AIR;
     } else if(isIdle()) {
         if(PlayerPhysicsComponent::velocity_.x > 0) {
-            if(isOnGround_) {
+            if(NormalPhysicsComponent::isOnGround_) {
                 PhysicsComponent::velocity_.x = std::max(PhysicsComponent::velocity_.x - IDLE_X_ACCELERATION_GROUND, 0.0);
             } else {
                 PhysicsComponent::velocity_.x = std::max(PhysicsComponent::velocity_.x - IDLE_X_ACCELERATION_AIR, 0.0);
             }
         } else {
-            if(isOnGround_) {
+            if(NormalPhysicsComponent::isOnGround_) {
                 PhysicsComponent::velocity_.x = std::min(PhysicsComponent::velocity_.x + IDLE_X_ACCELERATION_GROUND, 0.0);
             } else {
                 PhysicsComponent::velocity_.x = std::min(PhysicsComponent::velocity_.x + IDLE_X_ACCELERATION_AIR, 0.0);
@@ -29,15 +29,15 @@ void PlayerPhysicsComponent::update(World& world) {
     }
 
     // Modify vertical movement
-    if(jumping_ && !jumpIP_ && isOnGround_) {
+    if(jumping_ && !jumpIP_ && NormalPhysicsComponent::isOnGround_) {
         PhysicsComponent::velocity_.y += JUMP_VELOCITY;
-        isOnGround_ = false;
+        NormalPhysicsComponent::isOnGround_ = false;
         jumpIP_ = true;
         jumping_ = false;
     }
 
     // Apply gravity acceleration
-    if(isOnGround_) {
+    if(NormalPhysicsComponent::isOnGround_) {
         PhysicsComponent::velocity_.y = 0;
     } else {
         PhysicsComponent::velocity_.y += WorldConstants::WORLD_GRAVITY_ACCELERATION;
@@ -47,7 +47,7 @@ void PlayerPhysicsComponent::update(World& world) {
     PhysicsComponent::position_ += PhysicsComponent::velocity_;
 
     // Resolve world collision
-    world.resolveCollision(this);
+    world.resolveNormalCollision(this);
 
     return;
 }

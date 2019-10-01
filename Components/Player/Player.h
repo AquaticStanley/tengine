@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../ComponentConcepts/NormalPhysicsComponent.h"
 #include "../../World.h"
 
 namespace CompConstants {
@@ -15,19 +16,17 @@ namespace CompConstants {
   }
 }
 
-class PlayerPhysicsComponent : public PhysicsComponent {
+class PlayerPhysicsComponent : public NormalPhysicsComponent {
 public:
-  PlayerPhysicsComponent(sf::Vector2f position, sf::Vector2f hitbox) : PhysicsComponent(position, hitbox) {}
+  PlayerPhysicsComponent(sf::Vector2f position, sf::Vector2f hitbox) : NormalPhysicsComponent(position, hitbox) {}
   virtual void update(World& world);
 
 public:
-  bool canMove_;
   bool facingRight_;
   bool walkingRight_;
   bool walkingLeft_;
   bool floatingRight_;
   bool floatingLeft_;
-  bool isOnGround_;
   bool jumpIP_;
   bool jumping_;
 

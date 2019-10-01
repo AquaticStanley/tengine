@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "GameObject.h"
+#include "ComponentConcepts/NormalPhysicsComponent.h"
 
 namespace WorldConstants {
   // World Constants
@@ -26,7 +27,7 @@ public:
   void updatePhysics();
   void render(double frameProgress, Graphics& graphics);
 
-  void resolveCollision(PhysicsComponent* physics);
+  void resolveNormalCollision(PhysicsComponent* physics);
 
   // void resolvePlayerCollision(PlayerPhysicsComponent* physics);
 
