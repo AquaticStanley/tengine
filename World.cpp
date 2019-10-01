@@ -1,4 +1,5 @@
 #include "World.h"
+#include "Components/Player/Player.h"
 
 void World::processInput() {
   for(auto& entity : entities_) {
@@ -28,6 +29,11 @@ void World::render(double frameProgress, Graphics& graphics) {
 
 void World::resolveCollision(PhysicsComponent* physics) {
     
+}
+
+void World::resolvePlayerCollision(PlayerPhysicsComponent* physics) {
+    sf::Vector2f previousPosition = physics->position_ - physics->velocity_;
+    physics->isOnGround_ = false;
 }
 
 void World::addEntities(std::vector<GameObject>& entities) {

@@ -15,6 +15,8 @@ namespace WorldConstants {
   const float WORLD_GRAVITY_ACCELERATION = -0.05;
 }
 
+class PlayerPhysicsComponent;
+
 class World {
 public:
   World() {}
@@ -25,6 +27,10 @@ public:
   void render(double frameProgress, Graphics& graphics);
 
   void resolveCollision(PhysicsComponent* physics);
+
+  void resolvePlayerCollision(PlayerPhysicsComponent* physics);
+
+  // Add generic resolveCollision for other things
 
   void addEntities(std::vector<GameObject>& entities);
 

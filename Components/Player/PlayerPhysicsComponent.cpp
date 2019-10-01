@@ -47,7 +47,7 @@ void PlayerPhysicsComponent::update(World& world) {
     PhysicsComponent::position_ += PhysicsComponent::velocity_;
 
     // Resolve world collision
-    world.resolveCollision(this);
+    world.resolvePlayerCollision(this);
 
     return;
 }
