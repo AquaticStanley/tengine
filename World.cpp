@@ -11,9 +11,6 @@ void World::updatePhysics() {
   // Update physics of each entity
   for(auto& entity : entities_) {
     entity.updatePhysics(*this);
-
-    // Resolve all objects after this entity changed
-
   }
 
   // Remove dead entities
@@ -27,14 +24,75 @@ void World::render(double frameProgress, Graphics& graphics) {
   }
 }
 
-void World::resolveNormalCollision(PhysicsComponent* physics) {
-    
-}
+void World::resolveNormalCollision(NormalPhysicsComponent* physics) {
+    sf::Vector2f previousPosition = physics->position_ - physics->velocity_;
+    physics->isOnGround_ = false;
 
-// void World::resolvePlayerCollision(PlayerPhysicsComponent* physics) {
-//     sf::Vector2f previousPosition = physics->position_ - physics->velocity_;
-//     physics->isOnGround_ = false;
-// }
+    auto valueInRange = [](double value, double min, double max) {
+        return (value >= min) && (value <= max);
+    };
+
+    // Check if space is occupied
+    for(auto& entity : entities_) {
+        // bool sameXLevel = valueInRange(entities[i].m_data->m_position.x, data->m_position.x, data->m_position.x + data->m_hitbox.x + 1) ||
+        // valueInRange(data->m_position.x, entities[i].m_data->m_position.x, entities[i].m_data->m_position.x + entities[i].m_data->m_hitbox.x + 1);
+
+        //   bool sameYLevel = valueInRange(entities[i].m_data->m_position.y, data->m_position.y, data->m_position.y + data->m_hitbox.y + 1) ||
+        //     valueInRange(data->m_position.y, entities[i].m_data->m_position.y, entities[i].m_data->m_position.y + entities[i].m_data->m_hitbox.y + 1);
+        bool same_x_level = valueInRange(entity.physics_->position_.x, physics->position_.x, physics->hitbox_.x + 1) ||
+                            valueInRange(physics->position_.x, entity.physics_->position_.x, entity.physics_->position_.x + entity.physics_->hitbox_.x + 1);
+    
+        bool same_y_level = valueInRange(entity.physics_->position_.y, physics->position_.y, physics->position_.y + physics->hitbox_.y + 1) ||
+                            valueInRange(physics->position_.y, entity.physics_->position_.y, entity.physics_->position_.y + entity.physics_->hitbox_.y + 1);
+
+        if(same_x_level && same_y_level) {
+            // Collision detected
+            if(previousPosition.y > entity.physics_->position_.y + entity.physics_->hitbox_.y) {
+                // Was above object before collision
+
+                // Move up until no collision
+                physics->position_.y = entity.physics_->position_.y + entity.physics_->hitbox_.y + 1;
+
+                // Stop pushing into object
+                physics->velocity_.y = 0;
+            } else if(previousPosition.y + physics->hitbox_.y < entity.physics_->position_.y) {
+                // Was below object before collision
+
+                // Move down until no collision
+                physics->position_.y = entity.physics_->position_.y - physics->hitbox_.y - 1;
+
+                // Stop pushing into object
+                physics->velocity_.y = 0;
+            } else {
+                // Was same level as object before collision - horizontal collision
+                if(previousPosition.x > entity.physics_->position_.x + entity.physics_->hitbox_.x) {
+                    // Was to the right of object before collision
+
+                    // Move to the right until no collision
+                    physics->position_.x = entity.physics_->position_.x + entity.physics_->hitbox_.x + 1;
+
+                    // Stop pushing into object
+                    physics->velocity_.x = 0;
+                } else if(previousPosition.x + physics->hitbox_.x < entity.physics_->position_.x) {
+                    // Was to the left of object before collision
+
+                    // Move to the left until no collision
+                    physics->position_.x = entity.physics_->position_.x - physics->hitbox_.x - 1;
+
+                    // Stop pushing into object
+                    physics->velocity_.x = 0;
+                }
+            }
+        }
+
+        if(same_x_level && physics->position_.y == entity.physics_->position_.y + entity.physics_->hitbox_.y + 1) {
+            // Object is on ground
+            physics->isOnGround_ = true;
+        }
+    }
+
+    return;
+}
 
 void World::addEntities(std::vector<GameObject>& entities) {
   for(auto& entity : entities) {
