@@ -19,7 +19,7 @@ void Graphics::draw(sf::Vector2f position, sf::Vector2f hitbox, sf::Sprite sprit
   sf::Vector2f roundedPosition = sf::Vector2f(position.x - 0.5, position.y - 0.5);
 
   //Translate position
-  translatePosition(roundedPosition);
+  roundedPosition = translatePosition(roundedPosition);
 
   //Set Position
   sprite.setPosition(roundedPosition);

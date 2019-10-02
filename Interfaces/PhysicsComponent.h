@@ -6,10 +6,7 @@ class World;
 
 class PhysicsComponent {
 public:
-  PhysicsComponent(const sf::Vector2f& position) : PhysicsComponent(position, sf::Vector2f(0, 0), sf::Vector2f(0, 0), sf::Vector2f(0, 0)) {}
-  PhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox) : PhysicsComponent(position, hitbox, sf::Vector2f(0, 0), sf::Vector2f(0, 0)) {}
-  PhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox,  const sf::Vector2f& velocity) : PhysicsComponent(position, hitbox, velocity, sf::Vector2f(0, 0)) {}
-  PhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox,  const sf::Vector2f& velocity, const sf::Vector2f& acceleration) : 
+  PhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox = sf::Vector2f(0, 0),  const sf::Vector2f& velocity = sf::Vector2f(0, 0), const sf::Vector2f& acceleration = sf::Vector2f(0, 0)) : 
                    position_(position), hitbox_(hitbox), velocity_(velocity), acceleration_(acceleration), toBeRemoved_(false) {}
 
   virtual ~PhysicsComponent() {}

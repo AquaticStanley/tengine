@@ -4,10 +4,12 @@
 
 class NormalPhysicsComponent : public PhysicsComponent {
 public:
-    NormalPhysicsComponent(const sf::Vector2f& position) : PhysicsComponent(position) {}
-    NormalPhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox) : PhysicsComponent(position, hitbox) {}
-    NormalPhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox,  const sf::Vector2f& velocity) : PhysicsComponent(position, hitbox, velocity) {}
-    NormalPhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox,  const sf::Vector2f& velocity, const sf::Vector2f& acceleration) : PhysicsComponent(position, hitbox, velocity, acceleration) {}
+    NormalPhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox = sf::Vector2f(0, 0),  const sf::Vector2f& velocity = sf::Vector2f(0, 0), const sf::Vector2f& acceleration = sf::Vector2f(0, 0))
+    : PhysicsComponent(position, hitbox, velocity, acceleration)
+    , canMove_(true)
+    , isOnGround_(false)
+    {}
+
     virtual void update(World& world) = 0;
 
     virtual ~NormalPhysicsComponent() {}

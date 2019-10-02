@@ -43,6 +43,23 @@ void PlayerPhysicsComponent::update(World& world) {
         PhysicsComponent::velocity_.y += WorldConstants::WORLD_GRAVITY_ACCELERATION;
     }
 
+    // Cap movement speeds
+    if(std::abs(PhysicsComponent::velocity_.x) >= WorldConstants::WORLD_X_SPEED_LIMIT) {
+        if(PhysicsComponent::velocity_.x < 0) {
+            PhysicsComponent::velocity_.x = WorldConstants::WORLD_X_SPEED_LIMIT * -1;
+        } else {
+            PhysicsComponent::velocity_.x = WorldConstants::WORLD_X_SPEED_LIMIT;
+        }
+    }
+
+    if(std::abs(PhysicsComponent::velocity_.y) >= WorldConstants::WORLD_Y_SPEED_LIMIT) {
+        if(PhysicsComponent::velocity_.y < 0) {
+            PhysicsComponent::velocity_.y = WorldConstants::WORLD_Y_SPEED_LIMIT * -1;
+        } else {
+            PhysicsComponent::velocity_.y = WorldConstants::WORLD_Y_SPEED_LIMIT;
+        }
+    }
+
     // Set player position due to velocity changes
     PhysicsComponent::position_ += PhysicsComponent::velocity_;
 

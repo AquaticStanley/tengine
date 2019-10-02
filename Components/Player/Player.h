@@ -2,6 +2,7 @@
 
 #include "../../ComponentConcepts/NormalPhysicsComponent.h"
 #include "../../World.h"
+#include <cmath>
 
 namespace CompConstants {
   namespace Player {
@@ -12,13 +13,22 @@ namespace CompConstants {
     constexpr double IDLE_X_ACCELERATION_GROUND = 0.25;
     constexpr double IDLE_X_ACCELERATION_AIR = 0.5;
     constexpr double JUMP_VELOCITY = 3.0;
-    const std::string STANDING_TEXTURE = "../../Assets/grillStandingSprite.png";
+    const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
   }
 }
 
 class PlayerPhysicsComponent : public NormalPhysicsComponent {
 public:
-  PlayerPhysicsComponent(sf::Vector2f position, sf::Vector2f hitbox) : NormalPhysicsComponent(position, hitbox) {}
+  PlayerPhysicsComponent(sf::Vector2f position, sf::Vector2f hitbox)
+  : NormalPhysicsComponent(position, hitbox)
+  , facingRight_(false)
+  , walkingRight_(false)
+  , walkingLeft_(false)
+  , floatingRight_(false)
+  , floatingLeft_(false)
+  , jumpIP_(false)
+  ,jumping_(false)
+  {}
   virtual void update(World& world);
 
 public:
@@ -64,13 +74,14 @@ private:
 class PlayerGraphicsComponent : public GraphicsComponent {
 public:
   PlayerGraphicsComponent(const std::unique_ptr<PhysicsComponent>& physics) : GraphicsComponent(physics) {
-    STANDING_TEXTURE.loadFromFile(CompConstants::Player::STANDING_TEXTURE);
-    STANDING_SPRITE.setTexture(STANDING_TEXTURE);
+    STANDING_TEXTURE = std::make_unique<sf::Texture>();
+    STANDING_TEXTURE->loadFromFile(CompConstants::Player::STANDING_TEXTURE);
+    STANDING_SPRITE.setTexture(*STANDING_TEXTURE);
     STANDING_SPRITE.setTextureRect(sf::IntRect(0, 0, CompConstants::Player::PLAYER_WIDTH, CompConstants::Player::PLAYER_HEIGHT));
   }
   virtual void update(Graphics& graphics, double frameProgress);
 
 private:
-  sf::Texture STANDING_TEXTURE;
+  std::unique_ptr<sf::Texture> STANDING_TEXTURE;
   sf::Sprite STANDING_SPRITE;
 };

@@ -40,7 +40,7 @@ void loop() {
   view.zoom(1 / zoomMultiplier);
   window.setView(view);
 
-  // // Main game loop
+  // Main game loop
   while(window.isOpen()) {
     sf::Event event;
     while(window.pollEvent(event)) {
@@ -103,6 +103,9 @@ void loop() {
 
 std::vector<GameObject> getTestLevel() {
   std::vector<GameObject> gameObjects;
+
+  sf::Vector2f playerPos(300, 600);
+  gameObjects.emplace_back(GOFactory::createPlayer(playerPos));
 
   sf::Vector2f floorPos(150, 250);
   sf::Vector2f floorHitbox(700, 5);
