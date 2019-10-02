@@ -105,16 +105,19 @@ std::vector<GameObject> getTestLevel() {
   std::vector<GameObject> gameObjects;
 
   // Create Player
-  sf::Vector2f playerPos(300, 600);
-  gameObjects.emplace_back(GOFactory::createPlayer(playerPos));
+  gameObjects.emplace_back(GOFactory::createPlayer(sf::Vector2f(300, 600)));
 
   // Create Camera
   gameObjects.emplace_back(GOFactory::createCamera(gameObjects[0].physics_));
 
-  // Create Platform
-  sf::Vector2f floorPos(150, 250);
-  sf::Vector2f floorHitbox(700, 5);
-  gameObjects.emplace_back(GOFactory::createPlatform(floorPos, floorHitbox));
+  // Create Platforms
+  gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(150, 250), sf::Vector2f(300, 4)));
+  gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(300, 500), sf::Vector2f(100, 3)));
+  gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(100, 200), sf::Vector2f(30, 600)));
+  gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(-100, 200), sf::Vector2f(700, 5)));
+  gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(600, 200), sf::Vector2f(400, 20)));
+  gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(1100, 200), sf::Vector2f(400, 20)));
+
 
   return gameObjects;
 }
