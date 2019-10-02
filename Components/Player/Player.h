@@ -29,6 +29,7 @@ public:
   , jumpIP_(false)
   ,jumping_(false)
   {}
+
   virtual void update(World& world);
 
 public:

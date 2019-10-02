@@ -93,7 +93,7 @@ void loop() {
 
     lagLeftOver = lag / MS_PER_UPDATE;
     if(spawned) {
-      view.setCenter(sf::Vector2f(world.entities_[0].physics_->position_.x * 2.0, view.getSize().y * zoomMultiplier) - world.entities_[0].physics_->position_);
+      view.setCenter(sf::Vector2f(world.entities_[1].physics_->position_.x * 2.0, view.getSize().y * zoomMultiplier) - world.entities_[1].physics_->position_);
     }
 
     window.setView(view);
@@ -104,9 +104,14 @@ void loop() {
 std::vector<GameObject> getTestLevel() {
   std::vector<GameObject> gameObjects;
 
+  // Create Player
   sf::Vector2f playerPos(300, 600);
   gameObjects.emplace_back(GOFactory::createPlayer(playerPos));
 
+  // Create Camera
+  gameObjects.emplace_back(GOFactory::createCamera(gameObjects[0].physics_));
+
+  // Create Platform
   sf::Vector2f floorPos(150, 250);
   sf::Vector2f floorHitbox(700, 5);
   gameObjects.emplace_back(GOFactory::createPlatform(floorPos, floorHitbox));

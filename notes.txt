@@ -106,3 +106,6 @@ What does swapping out components even look like?
 When a derived class needs to be coupled and use specialized derived methods of other components, it should do as in Player.h where it static_casts the Base class's component to what it expects I think
 
 Wrap up player states in a PlayerState class?
+
+
+Add thing where I don't compare object to itself in world.cpp
