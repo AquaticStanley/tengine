@@ -109,3 +109,22 @@ Wrap up player states in a PlayerState class?
 
 
 Add thing where I don't compare object to itself in world.cpp
+
+==========
+Abilities
+==========
+What should be the lowest building blocks for abilities?
+How would I go about doing something like sticking two gameobjects together?
+
+Every ability should have at minimum two things to ensure maximum flexibility:
+-The gameobject physics component from which the ability originated
+-The world on which this ability can act upon and which the gameobject is a part of
+
+Both of these can be realized by calling the appropriate ability functions at the end of the physics function that has the world passed to it already, probably before the collision resolve as well
+
+
+
+Derived handleInputs, triggered off of handleInputs of first-class containers
+PlayerAbilityHandleInputs being triggered as a child of PlayerHandleInputs
+
+Make ControlMap class for mapping sfml enum keys to actions

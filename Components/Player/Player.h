@@ -1,88 +1,95 @@
 #pragma once
 
-#include "../../ComponentConcepts/NormalPhysicsComponent.h"
-#include "../../World.h"
+#include <unordered_map>
 #include <cmath>
 
+#include "../../ComponentConcepts/NormalPhysicsComponent.h"
+#include "PlayerAbilities.h"
+#include "../../World.h"
+
 namespace CompConstants {
-  namespace Player {
-    constexpr int PLAYER_HEIGHT = 30;
-    constexpr int PLAYER_WIDTH = 15;
-    constexpr double WALK_ACCELERATION_GROUND = 0.30;
-    constexpr double WALK_ACCELERATION_AIR = 0.30;
-    constexpr double IDLE_X_ACCELERATION_GROUND = 0.25;
-    constexpr double IDLE_X_ACCELERATION_AIR = 0.5;
-    constexpr double JUMP_VELOCITY = 3.0;
-    const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
-  }
+   namespace Player {
+        constexpr int PLAYER_HEIGHT = 30;
+        constexpr int PLAYER_WIDTH = 15;
+        constexpr double WALK_ACCELERATION_GROUND = 0.30;
+        constexpr double WALK_ACCELERATION_AIR = 0.30;
+        constexpr double IDLE_X_ACCELERATION_GROUND = 0.25;
+        constexpr double IDLE_X_ACCELERATION_AIR = 0.5;
+        constexpr double JUMP_VELOCITY = 3.0;
+        const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
+
+        enum class Inputs {Left, Right, Jump};
+   }
 }
 
 class PlayerPhysicsComponent : public NormalPhysicsComponent {
 public:
-  PlayerPhysicsComponent(sf::Vector2f position, sf::Vector2f hitbox)
-  : NormalPhysicsComponent(position, hitbox)
-  , facingRight_(false)
-  , walkingRight_(false)
-  , walkingLeft_(false)
-  , floatingRight_(false)
-  , floatingLeft_(false)
-  , jumpIP_(false)
-  ,jumping_(false)
-  {}
+    PlayerPhysicsComponent(sf::Vector2f position, sf::Vector2f hitbox)
+    : NormalPhysicsComponent(position, hitbox)
+    , facingRight_(false)
+    , walkingRight_(false)
+    , walkingLeft_(false)
+    , floatingRight_(false)
+    , floatingLeft_(false)
+    , jumpIP_(false)
+    , jumping_(false)
+    , abilities_(this)
+    {}
 
-  virtual void update(World& world);
-
-public:
-  bool facingRight_;
-  bool walkingRight_;
-  bool walkingLeft_;
-  bool floatingRight_;
-  bool floatingLeft_;
-  bool jumpIP_;
-  bool jumping_;
+    virtual void update(World& world);
 
 public:
-  // State mutation functions
-  void setWalkingRight();
-  void setWalkingLeft();
-  void setFloatingRight();
-  void setFloatingLeft();
-  void clearLeftRight();
-  bool isIdle();
+    bool facingRight_;
+    bool walkingRight_;
+    bool walkingLeft_;
+    bool floatingRight_;
+    bool floatingLeft_;
+    bool jumpIP_;
+    bool jumping_;
+
+    PlayerAbilities abilities_;
+
+public:
+    // State mutation functions
+    void setWalkingRight();
+    void setWalkingLeft();
+    void setFloatingRight();
+    void setFloatingLeft();
+    void clearLeftRight();
+    bool isIdle();
 };
 
 class PlayerInputComponent : public InputComponent {
 public:
-  PlayerInputComponent(const std::unique_ptr<PhysicsComponent>& physics)
-  : InputComponent(physics)
-  , physics_(static_cast<PlayerPhysicsComponent*>(InputComponent::physics_))
-  , key_right(sf::Keyboard::Key::Right)
-  , key_left(sf::Keyboard::Key::Left)
-  , key_space(sf::Keyboard::Key::Space)
-  {}
+    PlayerInputComponent(const std::unique_ptr<PhysicsComponent>& physics)
+    : InputComponent(physics)
+    , physics_(static_cast<PlayerPhysicsComponent*>(InputComponent::physics_))
+    {
+        controlMap_[CompConstants::Player::Inputs::Right] = sf::Keyboard::Key::Right;
+        controlMap_[CompConstants::Player::Inputs::Left] = sf::Keyboard::Key::Left;
+        controlMap_[CompConstants::Player::Inputs::Jump] = sf::Keyboard::Key::Space;
+    }
 
-  virtual void update();
+    virtual void update();
 
 private:
-  PlayerPhysicsComponent* physics_;
+    PlayerPhysicsComponent* physics_;
 
-  // Key bindings to reassign at will
-  sf::Keyboard::Key key_right;
-  sf::Keyboard::Key key_left;
-  sf::Keyboard::Key key_space;
+    // Key bindings to reassign at will
+    std::unordered_map<CompConstants::Player::Inputs, sf::Keyboard::Key> controlMap_;
 };
 
 class PlayerGraphicsComponent : public GraphicsComponent {
 public:
-  PlayerGraphicsComponent(const std::unique_ptr<PhysicsComponent>& physics) : GraphicsComponent(physics) {
-    STANDING_TEXTURE = std::make_unique<sf::Texture>();
-    STANDING_TEXTURE->loadFromFile(CompConstants::Player::STANDING_TEXTURE);
-    STANDING_SPRITE.setTexture(*STANDING_TEXTURE);
-    STANDING_SPRITE.setTextureRect(sf::IntRect(0, 0, CompConstants::Player::PLAYER_WIDTH, CompConstants::Player::PLAYER_HEIGHT));
-  }
-  virtual void update(Graphics& graphics, double frameProgress);
+    PlayerGraphicsComponent(const std::unique_ptr<PhysicsComponent>& physics) : GraphicsComponent(physics) {
+        STANDING_TEXTURE = std::make_unique<sf::Texture>();
+        STANDING_TEXTURE->loadFromFile(CompConstants::Player::STANDING_TEXTURE);
+        STANDING_SPRITE.setTexture(*STANDING_TEXTURE);
+        STANDING_SPRITE.setTextureRect(sf::IntRect(0, 0, CompConstants::Player::PLAYER_WIDTH, CompConstants::Player::PLAYER_HEIGHT));
+    }
+    virtual void update(Graphics& graphics, double frameProgress);
 
 private:
-  std::unique_ptr<sf::Texture> STANDING_TEXTURE;
-  sf::Sprite STANDING_SPRITE;
+    std::unique_ptr<sf::Texture> STANDING_TEXTURE;
+    sf::Sprite STANDING_SPRITE;
 };
