@@ -16,9 +16,11 @@ namespace CompConstants {
         constexpr double IDLE_X_ACCELERATION_GROUND = 0.25;
         constexpr double IDLE_X_ACCELERATION_AIR = 0.5;
         constexpr double JUMP_VELOCITY = 3.0;
+        constexpr double WALK_TOP_SPEED = 3.0;
+        constexpr double SOFT_CAP_DECELERATION = 0.5;
         const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
 
-        enum class Inputs {Left, Right, Jump};
+        enum class Inputs {Left, Right, Jump, Up, Down};
    }
 }
 
@@ -46,6 +48,8 @@ public:
     bool floatingLeft_;
     bool jumpIP_;
     bool jumping_;
+    bool facingUp_;
+    bool facingDown_;
 
     PlayerAbilities abilities_;
 
@@ -55,6 +59,9 @@ public:
     void setWalkingLeft();
     void setFloatingRight();
     void setFloatingLeft();
+    void setFacingUp();
+    void setFacingDown();
+    void clearUpDown();
     void clearLeftRight();
     bool isIdle();
 };
@@ -68,6 +75,8 @@ public:
         controlMap_[CompConstants::Player::Inputs::Right] = sf::Keyboard::Key::Right;
         controlMap_[CompConstants::Player::Inputs::Left] = sf::Keyboard::Key::Left;
         controlMap_[CompConstants::Player::Inputs::Jump] = sf::Keyboard::Key::Space;
+        controlMap_[CompConstants::Player::Inputs::Up] = sf::Keyboard::Key::Up;
+        controlMap_[CompConstants::Player::Inputs::Down] = sf::Keyboard::Key::Down;
     }
 
     virtual void update();

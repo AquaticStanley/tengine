@@ -4,27 +4,36 @@ void PlayerPhysicsComponent::update(World& world) {
     using namespace CompConstants::Player;
 
     // Modify horizontal movement
-    if(walkingRight_) {
-        PhysicsComponent::velocity_.x += WALK_ACCELERATION_GROUND;
-    } else if(walkingLeft_) {
-        PhysicsComponent::velocity_.x -= WALK_ACCELERATION_GROUND;
-    } else if(floatingRight_) {
-        PhysicsComponent::velocity_.x += WALK_ACCELERATION_AIR;
-    } else if(floatingLeft_) {
-        PhysicsComponent::velocity_.x -= WALK_ACCELERATION_AIR;
-    } else if(isIdle()) {
+    if(std::abs(PlayerPhysicsComponent::velocity_.x) < WALK_TOP_SPEED) {
+        if(walkingRight_) {
+            PhysicsComponent::velocity_.x += WALK_ACCELERATION_GROUND;
+        } else if(walkingLeft_) {
+            PhysicsComponent::velocity_.x -= WALK_ACCELERATION_GROUND;
+        } else if(floatingRight_) {
+            PhysicsComponent::velocity_.x += WALK_ACCELERATION_AIR;
+        } else if(floatingLeft_) {
+            PhysicsComponent::velocity_.x -= WALK_ACCELERATION_AIR;
+        } else if(isIdle()) {
+            if(PlayerPhysicsComponent::velocity_.x > 0) {
+                if(NormalPhysicsComponent::isOnGround_) {
+                    PhysicsComponent::velocity_.x = std::max(PhysicsComponent::velocity_.x - IDLE_X_ACCELERATION_GROUND, 0.0);
+                } else {
+                    PhysicsComponent::velocity_.x = std::max(PhysicsComponent::velocity_.x - IDLE_X_ACCELERATION_AIR, 0.0);
+                }
+            } else {
+                if(NormalPhysicsComponent::isOnGround_) {
+                    PhysicsComponent::velocity_.x = std::min(PhysicsComponent::velocity_.x + IDLE_X_ACCELERATION_GROUND, 0.0);
+                } else {
+                    PhysicsComponent::velocity_.x = std::min(PhysicsComponent::velocity_.x + IDLE_X_ACCELERATION_AIR, 0.0);
+                }
+            }
+        }
+    } else {
+        // Apply deceleration for soft movement speed cap
         if(PlayerPhysicsComponent::velocity_.x > 0) {
-            if(NormalPhysicsComponent::isOnGround_) {
-                PhysicsComponent::velocity_.x = std::max(PhysicsComponent::velocity_.x - IDLE_X_ACCELERATION_GROUND, 0.0);
-            } else {
-                PhysicsComponent::velocity_.x = std::max(PhysicsComponent::velocity_.x - IDLE_X_ACCELERATION_AIR, 0.0);
-            }
+            PlayerPhysicsComponent::velocity_.x -= SOFT_CAP_DECELERATION;
         } else {
-            if(NormalPhysicsComponent::isOnGround_) {
-                PhysicsComponent::velocity_.x = std::min(PhysicsComponent::velocity_.x + IDLE_X_ACCELERATION_GROUND, 0.0);
-            } else {
-                PhysicsComponent::velocity_.x = std::min(PhysicsComponent::velocity_.x + IDLE_X_ACCELERATION_AIR, 0.0);
-            }
+            PlayerPhysicsComponent::velocity_.x += SOFT_CAP_DECELERATION;
         }
     }
 
@@ -60,6 +69,9 @@ void PlayerPhysicsComponent::update(World& world) {
         }
     }
 
+    // Apply player abilities as modifiers
+    abilities_.applyActiveAbilities(world);
+
     // Set player position due to velocity changes
     PhysicsComponent::position_ += PhysicsComponent::velocity_;
 
@@ -91,6 +103,21 @@ void PlayerPhysicsComponent::setFloatingLeft() {
     clearLeftRight();
     floatingLeft_ = true;
     facingRight_ = false;
+}
+
+void PlayerPhysicsComponent::setFacingUp() {
+    facingUp_ = true;
+    facingDown_ = false;
+}
+
+void PlayerPhysicsComponent::setFacingDown() {
+    facingDown_ = true;
+    facingUp_ = false;
+}
+
+void PlayerPhysicsComponent::clearUpDown() {
+    facingUp_ = false;
+    facingDown_ = false;
 }
 
 void PlayerPhysicsComponent::clearLeftRight() {

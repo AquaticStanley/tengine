@@ -128,3 +128,6 @@ Derived handleInputs, triggered off of handleInputs of first-class containers
 PlayerAbilityHandleInputs being triggered as a child of PlayerHandleInputs
 
 Make ControlMap class for mapping sfml enum keys to actions
+
+Possibly make an ability type that's a consistent stream of input, like a jetpack or something like it
+    - Possibly unnecessary

@@ -34,5 +34,16 @@ void PlayerInputComponent::update() {
         }
     }
 
+    if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Up])) {
+        physics_->setFacingUp();
+    } else if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Down])) {
+        physics_->setFacingDown();
+    } else {
+        physics_->clearUpDown();
+    }
+
+    // Take care of possible abilities
+    physics_->abilities_.updateAbilityInputs();
+
     return;
 }
