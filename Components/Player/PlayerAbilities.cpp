@@ -2,12 +2,19 @@
 #include <iostream>
 
 PlayerAbilityManager::PlayerAbilityManager(Ability* ability)
-: complete_(true)
-, physicsReady_(false)
-, ability_(ability) {}
+// : complete_(true)
+// , physicsReady_(false)
+: ability_(ability) {}
 
-PlayerAbilities::PlayerAbilities(PlayerPhysicsComponent* physics)
-: physics_(physics) {
+bool PlayerAbilityManager::active() {
+    return (ability_->framesLeft_ > 0);
+}
+
+void PlayerAbilityManager::reset() {
+    ability_->reset();
+}
+
+PlayerAbilities::PlayerAbilities() {
     using namespace CompConstants::Player;
     // Set up keybinds (this should be configurable later on)
     abilityKeybinds_[AbilityInputs::Ability1] = sf::Keyboard::Key::A;
@@ -28,30 +35,32 @@ void PlayerAbilities::updateAbilityInputs() {
     for(auto& [input, key] : abilityKeybinds_) {
         // Check if key is pressed
         if(sf::Keyboard::isKeyPressed(key)) {
-            // Activate ability and break
-            if(abilities_.at(input).complete_) {
+            if(abilities_.at(input).key_released_) {
+                // Activate ability and break
                 std::cout << "Key pressed" << std::endl;
-                abilities_.at(input).complete_ = false;
-                abilities_.at(input).physicsReady_ = true;
-                break;
+                abilities_.at(input).key_released_ = false;
+                abilities_.at(input).reset();
             }
+            break;
         } else {
-            abilities_.at(input).complete_ = true;
+            abilities_.at(input).key_released_ = true;
         }
     }
 }
 
-void PlayerAbilities::applyActiveAbilities(World& world) {
+void PlayerAbilities::applyActiveAbilities(PlayerPhysicsComponent* physics, World& world) {
     // Use pointer to the relevant physics component and the world to do what's necessary for this ability
     for(auto& [input, ability_manager] : abilities_) {
-        if(ability_manager.physicsReady_) {
-            ability_manager.ability_->apply(physics_, world);
+        // Set to kick off or currently in progress
+        if(ability_manager.active()) {
+            ability_manager.ability_->apply(physics, world);
             std::cout << "Ability applied" << std::endl;
-            ability_manager.physicsReady_ = false;
         }
     }
 }
 
 void PlayerAbilities::add_ability(CompConstants::Player::AbilityInputs input, Ability ability) {
     // abilityKeybinds_[input] = 
+    (void)input;
+    (void)ability;
 }

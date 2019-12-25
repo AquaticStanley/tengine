@@ -35,12 +35,12 @@ void World::resolveNormalCollision(NormalPhysicsComponent* physics) {
     // Check if space is occupied
     for(auto& entity : entities_) {
         if(entity.physics_->getID() != physics->getID()) {
-            bool same_x_level = valueInRange(entity.physics_->position_.x, physics->position_.x, physics->hitbox_.x + 1) ||
+            bool same_x_level = valueInRange(entity.physics_->position_.x, physics->position_.x, physics->position_.x + physics->hitbox_.x + 1) ||
                                 valueInRange(physics->position_.x, entity.physics_->position_.x, entity.physics_->position_.x + entity.physics_->hitbox_.x + 1);
         
             bool same_y_level = valueInRange(entity.physics_->position_.y, physics->position_.y, physics->position_.y + physics->hitbox_.y + 1) ||
                                 valueInRange(physics->position_.y, entity.physics_->position_.y, entity.physics_->position_.y + entity.physics_->hitbox_.y + 1);
-
+    
             if(same_x_level && same_y_level) {
                 // Collision detected
                 if(previousPosition.y > entity.physics_->position_.y + entity.physics_->hitbox_.y) {

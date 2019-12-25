@@ -17,22 +17,21 @@ class PlayerPhysicsComponent;
 
 struct PlayerAbilityManager {
     PlayerAbilityManager(Ability* ability);
-    bool complete_;
-    bool physicsReady_;
+    bool active();
+    void reset();
+    bool key_released_;
     Ability* ability_;
 };
 
 class PlayerAbilities {
 public:
-    PlayerAbilities(PlayerPhysicsComponent* physics);
+    PlayerAbilities();
 
     void updateAbilityInputs();
 
-    void applyActiveAbilities(World& world);
+    void applyActiveAbilities(PlayerPhysicsComponent* physics, World& world);
 
 private:
-    PlayerPhysicsComponent* physics_;
-
     std::unordered_map<CompConstants::Player::AbilityInputs, sf::Keyboard::Key> abilityKeybinds_;
 
     std::unordered_map<CompConstants::Player::AbilityInputs, PlayerAbilityManager> abilities_;

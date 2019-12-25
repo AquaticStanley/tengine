@@ -117,6 +117,7 @@ std::vector<GameObject> getTestLevel() {
     gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(-100, 200), sf::Vector2f(700, 5)));
     gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(600, 200), sf::Vector2f(400, 20)));
     gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(1100, 200), sf::Vector2f(400, 20)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(700, 200), sf::Vector2f(30, 300)));
 
     return gameObjects;
 }

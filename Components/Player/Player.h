@@ -11,13 +11,13 @@ namespace CompConstants {
    namespace Player {
         constexpr int PLAYER_HEIGHT = 30;
         constexpr int PLAYER_WIDTH = 15;
-        constexpr double WALK_ACCELERATION_GROUND = 0.30;
-        constexpr double WALK_ACCELERATION_AIR = 0.30;
-        constexpr double IDLE_X_ACCELERATION_GROUND = 0.25;
-        constexpr double IDLE_X_ACCELERATION_AIR = 0.5;
-        constexpr double JUMP_VELOCITY = 3.0;
+        constexpr double WALK_ACCELERATION_GROUND = 0.50;
+        constexpr double WALK_ACCELERATION_AIR = 0.50;
+        constexpr double IDLE_X_ACCELERATION_GROUND = 0.15;
+        constexpr double IDLE_X_ACCELERATION_AIR = 0.10;
+        constexpr double JUMP_VELOCITY = 5.0;
         constexpr double WALK_TOP_SPEED = 3.0;
-        constexpr double SOFT_CAP_DECELERATION = 0.5;
+        constexpr double SOFT_CAP_DECELERATION = 0.10;
         const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
 
         enum class Inputs {Left, Right, Jump, Up, Down};
@@ -35,7 +35,7 @@ public:
     , floatingLeft_(false)
     , jumpIP_(false)
     , jumping_(false)
-    , abilities_(this)
+    , canMove_(true)
     {}
 
     virtual void update(World& world);
@@ -50,6 +50,7 @@ public:
     bool jumping_;
     bool facingUp_;
     bool facingDown_;
+    bool canMove_;
 
     PlayerAbilities abilities_;
 

@@ -13,7 +13,7 @@ namespace WorldConstants {
   const float WORLD_Y_SPEED_LIMIT = 10.0;
 
   // Units/second^2
-  const float WORLD_GRAVITY_ACCELERATION = -0.05;
+  const float WORLD_GRAVITY_ACCELERATION = -0.15;
 }
 
 class PlayerPhysicsComponent;

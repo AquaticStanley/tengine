@@ -19,27 +19,26 @@ void PlayerInputComponent::update() {
         } else {
             physics_->clearLeftRight();
         }
-    }
-
-    if(!physics_->jumpIP_) {
-        if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Jump])) {
-            if(physics_->isOnGround_) {
-                physics_->jumping_ = true;
+        if(!physics_->jumpIP_) {
+            if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Jump])) {
+                if(physics_->isOnGround_) {
+                    physics_->jumping_ = true;
+                }
+            }
+        } else {
+            physics_->jumping_ = false;
+            if(!sf::Keyboard::isKeyPressed(controlMap_[Inputs::Jump])) {
+                physics_->jumpIP_ = false;
             }
         }
-    } else {
-        physics_->jumping_ = false;
-        if(!sf::Keyboard::isKeyPressed(controlMap_[Inputs::Jump])) {
-            physics_->jumpIP_ = false;
-        }
-    }
 
-    if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Up])) {
-        physics_->setFacingUp();
-    } else if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Down])) {
-        physics_->setFacingDown();
-    } else {
-        physics_->clearUpDown();
+        if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Up])) {
+            physics_->setFacingUp();
+        } else if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Down])) {
+            physics_->setFacingDown();
+        } else {
+            physics_->clearUpDown();
+        }
     }
 
     // Take care of possible abilities
