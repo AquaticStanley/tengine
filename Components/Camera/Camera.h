@@ -4,7 +4,7 @@
 
 namespace CompConstants {
   namespace Camera {
-    constexpr double MAX_CAMERA_SPEED = 5.0;
+    constexpr double MAX_CAMERA_SPEED = 3.0;
   }
 }
 

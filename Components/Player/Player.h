@@ -13,8 +13,8 @@ namespace CompConstants {
         constexpr int PLAYER_WIDTH = 15;
         constexpr double WALK_ACCELERATION_GROUND = 0.50;
         constexpr double WALK_ACCELERATION_AIR = 0.50;
-        constexpr double IDLE_X_ACCELERATION_GROUND = 0.15;
-        constexpr double IDLE_X_ACCELERATION_AIR = 0.10;
+        constexpr double IDLE_X_ACCELERATION_GROUND = 0.20;
+        constexpr double IDLE_X_ACCELERATION_AIR = 0.20;
         constexpr double JUMP_VELOCITY = 5.0;
         constexpr double WALK_TOP_SPEED = 3.0;
         constexpr double SOFT_CAP_DECELERATION = 0.10;
