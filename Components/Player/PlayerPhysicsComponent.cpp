@@ -55,6 +55,10 @@ void PlayerPhysicsComponent::update(World& world) {
         PhysicsComponent::velocity_.y += WorldConstants::WORLD_GRAVITY_ACCELERATION;
     }
 
+    if(PhysicsComponent::velocity_.y < TERMINAL_VELOCITY) {
+        PhysicsComponent::velocity_.y = TERMINAL_VELOCITY;
+    }
+
     // Cap movement speeds
     if(std::abs(PhysicsComponent::velocity_.x) >= WorldConstants::WORLD_X_SPEED_LIMIT) {
         if(PhysicsComponent::velocity_.x < 0) {

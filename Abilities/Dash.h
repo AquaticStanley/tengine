@@ -5,7 +5,7 @@
 
 namespace AbilityConstants {
     namespace Dash {
-        constexpr float DASH_VELOCITY = 20.0;
+        constexpr float DASH_VELOCITY = 30.0;
         constexpr int ACTIVE_FRAMES = 10;
     }
 }

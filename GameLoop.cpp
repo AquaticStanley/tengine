@@ -89,7 +89,7 @@ void loop() {
 
         window.clear(sf::Color::Black);
 
-        world.render((lag/MS_PER_UPDATE) + (1.0 - lagLeftOver), *graphics);
+        world.render((lag/MS_PER_UPDATE) + (0.0 - lagLeftOver), *graphics);
 
         lagLeftOver = lag / MS_PER_UPDATE;
         if(spawned) {
@@ -116,7 +116,7 @@ std::vector<GameObject> getTestLevel() {
     gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(150, 400), sf::Vector2f(30, 600)));
     gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(-100, 400), sf::Vector2f(700, 50)));
     gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(600, 400), sf::Vector2f(400, 60)));
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(1100, 400), sf::Vector2f(400, 20)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(1100, 400), sf::Vector2f(4000, 20)));
     gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(700, 400), sf::Vector2f(30, 300)));
 
     return gameObjects;

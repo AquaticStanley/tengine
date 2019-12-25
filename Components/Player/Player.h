@@ -11,13 +11,14 @@ namespace CompConstants {
    namespace Player {
         constexpr int PLAYER_HEIGHT = 120;
         constexpr int PLAYER_WIDTH = 60;
-        constexpr double WALK_ACCELERATION_GROUND = 1.50;
-        constexpr double WALK_ACCELERATION_AIR = 1.50;
+        constexpr double WALK_ACCELERATION_GROUND = 1.0;
+        constexpr double WALK_ACCELERATION_AIR = 1.0;
         constexpr double IDLE_X_ACCELERATION_GROUND = 1.0;
         constexpr double IDLE_X_ACCELERATION_AIR = 1.0;
         constexpr double JUMP_VELOCITY = 15.0;
         constexpr double WALK_TOP_SPEED = 10.0;
         constexpr double SOFT_CAP_DECELERATION = 0.30;
+        constexpr double TERMINAL_VELOCITY = -15.0;
         const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
 
         enum class Inputs {Left, Right, Jump, Up, Down};
