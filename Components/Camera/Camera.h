@@ -16,7 +16,9 @@ public:
     CameraPhysicsComponent(const std::unique_ptr<PhysicsComponent>& physicsToFollow)
     : PhysicsComponent(physicsToFollow->position_, physicsToFollow->hitbox_)
     , physicsToFollow_(physicsToFollow.get())
-    {}
+    {
+        PhysicsComponent::canCollide_ = false;
+    }
 
     virtual void update(World& world);
 };

@@ -1,4 +1,5 @@
 #include "World.h"
+#include <iostream>
 // #include "Components/Player/Player.h"
 
 void World::processInput() {
@@ -34,7 +35,7 @@ void World::resolveNormalCollision(NormalPhysicsComponent* physics) {
 
     // Check if space is occupied
     for(auto& entity : entities_) {
-        if(entity.physics_->getID() != physics->getID()) {
+        if(entity.physics_->getID() != physics->getID() && entity.physics_->canCollide()) {
             bool same_x_level = valueInRange(entity.physics_->position_.x, physics->position_.x, physics->position_.x + physics->hitbox_.x + 1) ||
                                 valueInRange(physics->position_.x, entity.physics_->position_.x, entity.physics_->position_.x + entity.physics_->hitbox_.x + 1);
         

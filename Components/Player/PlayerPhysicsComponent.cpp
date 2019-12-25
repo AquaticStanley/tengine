@@ -1,9 +1,10 @@
 #include "Player.h"
+#include <iostream>
 
 void PlayerPhysicsComponent::update(World& world) {
     using namespace CompConstants::Player;
 
-    if(canMove_) {
+    if(NormalPhysicsComponent::canMove_) {
         // Modify horizontal movement
         if(std::abs(PlayerPhysicsComponent::velocity_.x) < WALK_TOP_SPEED) {
             if(walkingRight_) {

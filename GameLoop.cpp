@@ -35,7 +35,7 @@ void loop() {
     spawnClock.start();
 
     // View for zoom and camera
-    float zoomMultiplier = 2.0;
+    float zoomMultiplier = 0.5;
     sf::View view = window.getDefaultView();
     view.zoom(1 / zoomMultiplier);
     window.setView(view);
@@ -105,19 +105,19 @@ std::vector<GameObject> getTestLevel() {
     std::vector<GameObject> gameObjects;
 
     // Create Player
-    gameObjects.emplace_back(GOFactory::createPlayer(sf::Vector2f(300, 600)));
+    gameObjects.emplace_back(GOFactory::createPlayer(sf::Vector2f(300, 800)));
 
     // Create Camera
     gameObjects.emplace_back(GOFactory::createCamera(gameObjects[0].physics_));
 
     // Create Platforms
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(150, 250), sf::Vector2f(300, 4)));
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(300, 500), sf::Vector2f(100, 3)));
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(100, 200), sf::Vector2f(30, 600)));
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(-100, 200), sf::Vector2f(700, 5)));
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(600, 200), sf::Vector2f(400, 20)));
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(1100, 200), sf::Vector2f(400, 20)));
-    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(700, 200), sf::Vector2f(30, 300)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(150, 400), sf::Vector2f(300, 20)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(300, 700), sf::Vector2f(100, 30)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(150, 400), sf::Vector2f(30, 600)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(-100, 400), sf::Vector2f(700, 50)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(600, 400), sf::Vector2f(400, 60)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(1100, 400), sf::Vector2f(400, 20)));
+    gameObjects.emplace_back(GOFactory::createPlatform(sf::Vector2f(700, 400), sf::Vector2f(30, 300)));
 
     return gameObjects;
 }

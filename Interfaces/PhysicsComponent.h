@@ -7,13 +7,14 @@ class World;
 class PhysicsComponent {
 public:
     PhysicsComponent(const sf::Vector2f& position, const sf::Vector2f hitbox = sf::Vector2f(0, 0),  const sf::Vector2f& velocity = sf::Vector2f(0, 0), const sf::Vector2f& acceleration = sf::Vector2f(0, 0)) : 
-                   position_(position), hitbox_(hitbox), velocity_(velocity), acceleration_(acceleration), id_(generateNewID()), toBeRemoved_(false) {}
+                   position_(position), hitbox_(hitbox), velocity_(velocity), acceleration_(acceleration), canCollide_(true), id_(generateNewID()), toBeRemoved_(false) {}
 
     virtual ~PhysicsComponent() {}
 
     virtual void update(World& world) = 0;
 
-    int getID() { return id_; }
+    bool canCollide() const { return canCollide_; }
+    int getID() const { return id_; }
 
 public:
     sf::Vector2f position_;
@@ -21,6 +22,7 @@ public:
     sf::Vector2f velocity_;
     sf::Vector2f acceleration_;
 
+    bool canCollide_;
     int id_;
     bool toBeRemoved_;
 

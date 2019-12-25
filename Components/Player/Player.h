@@ -9,15 +9,15 @@
 
 namespace CompConstants {
    namespace Player {
-        constexpr int PLAYER_HEIGHT = 30;
-        constexpr int PLAYER_WIDTH = 15;
-        constexpr double WALK_ACCELERATION_GROUND = 0.50;
-        constexpr double WALK_ACCELERATION_AIR = 0.50;
-        constexpr double IDLE_X_ACCELERATION_GROUND = 0.20;
-        constexpr double IDLE_X_ACCELERATION_AIR = 0.20;
-        constexpr double JUMP_VELOCITY = 5.0;
-        constexpr double WALK_TOP_SPEED = 3.0;
-        constexpr double SOFT_CAP_DECELERATION = 0.10;
+        constexpr int PLAYER_HEIGHT = 120;
+        constexpr int PLAYER_WIDTH = 60;
+        constexpr double WALK_ACCELERATION_GROUND = 1.50;
+        constexpr double WALK_ACCELERATION_AIR = 1.50;
+        constexpr double IDLE_X_ACCELERATION_GROUND = 1.0;
+        constexpr double IDLE_X_ACCELERATION_AIR = 1.0;
+        constexpr double JUMP_VELOCITY = 15.0;
+        constexpr double WALK_TOP_SPEED = 10.0;
+        constexpr double SOFT_CAP_DECELERATION = 0.30;
         const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
 
         enum class Inputs {Left, Right, Jump, Up, Down};
@@ -35,7 +35,6 @@ public:
     , floatingLeft_(false)
     , jumpIP_(false)
     , jumping_(false)
-    , canMove_(true)
     {}
 
     virtual void update(World& world);
@@ -50,7 +49,6 @@ public:
     bool jumping_;
     bool facingUp_;
     bool facingDown_;
-    bool canMove_;
 
     PlayerAbilities abilities_;
 
@@ -94,8 +92,11 @@ public:
     PlayerGraphicsComponent(const std::unique_ptr<PhysicsComponent>& physics) : GraphicsComponent(physics) {
         STANDING_TEXTURE = std::make_unique<sf::Texture>();
         STANDING_TEXTURE->loadFromFile(CompConstants::Player::STANDING_TEXTURE);
+        STANDING_TEXTURE->setSmooth(true);
         STANDING_SPRITE.setTexture(*STANDING_TEXTURE);
+        STANDING_SPRITE.scale(GraphicsComponent::hitbox().x / STANDING_SPRITE.getTextureRect().width, GraphicsComponent::hitbox().y / STANDING_SPRITE.getTextureRect().height);
         STANDING_SPRITE.setTextureRect(sf::IntRect(0, 0, CompConstants::Player::PLAYER_WIDTH, CompConstants::Player::PLAYER_HEIGHT));
+        STANDING_SPRITE.setOrigin(0, GraphicsComponent::hitbox().y);
     }
     virtual void update(Graphics& graphics, double frameProgress);
 
