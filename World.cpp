@@ -1,6 +1,6 @@
 #include "World.h"
 #include <iostream>
-// #include "Components/Player/Player.h"
+#include "Components/Player/Player.h"
 
 void World::processInput() {
   for(auto& entity : entities_) {
@@ -25,9 +25,9 @@ void World::render(double frameProgress, Graphics& graphics) {
   }
 }
 
-void World::resolveNormalCollision(NormalPhysicsComponent* physics) {
+void World::resolveNormalCollision(PlayerPhysicsComponent* physics) {
     sf::Vector2f previousPosition = physics->position_ - physics->velocity_;
-    physics->isOnGround_ = false;
+    // physics->isOnGround_ = false;
 
     auto valueInRange = [](double value, double min, double max) {
         return (value >= min) && (value <= max);
@@ -70,6 +70,9 @@ void World::resolveNormalCollision(NormalPhysicsComponent* physics) {
 
                         // Stop pushing into object
                         physics->velocity_.x = 0;
+                        if(!physics->facingRight_) {
+                            physics->wallAdjacent_ = true;
+                        }
                     } else if(previousPosition.x + physics->hitbox_.x < entity.physics_->position_.x) {
                         // Was to the left of object before collision
 
@@ -78,6 +81,9 @@ void World::resolveNormalCollision(NormalPhysicsComponent* physics) {
 
                         // Stop pushing into object
                         physics->velocity_.x = 0;
+                        if(physics->facingRight_) {
+                            physics->wallAdjacent_ = true;
+                        }
                     }
                 }
             }

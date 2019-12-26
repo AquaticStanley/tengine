@@ -27,7 +27,7 @@ public:
   void updatePhysics();
   void render(double frameProgress, Graphics& graphics);
 
-  void resolveNormalCollision(NormalPhysicsComponent* physics);
+  void resolveNormalCollision(PlayerPhysicsComponent* physics);
 
   // void resolvePlayerCollision(PlayerPhysicsComponent* physics);
 

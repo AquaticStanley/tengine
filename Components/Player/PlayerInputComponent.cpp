@@ -21,7 +21,7 @@ void PlayerInputComponent::update() {
         }
         if(!physics_->jumpIP_) {
             if(sf::Keyboard::isKeyPressed(controlMap_[Inputs::Jump])) {
-                if(physics_->isOnGround_) {
+                if(physics_->isOnGround_ || physics_->slidingDownWall()) {
                     physics_->jumping_ = true;
                 }
             }

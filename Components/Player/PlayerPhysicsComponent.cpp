@@ -39,19 +39,36 @@ void PlayerPhysicsComponent::update(World& world) {
             }
         }
 
-        // Modify vertical movement
-        if(jumping_ && !jumpIP_ && NormalPhysicsComponent::isOnGround_) {
-            PhysicsComponent::velocity_.y += JUMP_VELOCITY;
-            NormalPhysicsComponent::isOnGround_ = false;
-            jumpIP_ = true;
-            jumping_ = false;
+        // Modify vertical movement for jumping
+        if(jumping_ && !jumpIP_) {
+            if(NormalPhysicsComponent::isOnGround_) {
+                PhysicsComponent::velocity_.y += JUMP_VELOCITY;
+                NormalPhysicsComponent::isOnGround_ = false;
+                jumpIP_ = true;
+                jumping_ = false;
+            } else if(slidingDownWall()) {
+                if(facingRight_) {
+                    PhysicsComponent::velocity_ = WALL_JUMP_VELOCITY_LEFT;
+                } else {
+                    PhysicsComponent::velocity_ = WALL_JUMP_VELOCITY_RIGHT;
+                }
+                NormalPhysicsComponent::isOnGround_ = false;
+                jumping_ = false;
+            }
         }
     }
 
     // Apply gravity acceleration
     if(NormalPhysicsComponent::isOnGround_) {
         PhysicsComponent::velocity_.y = 0;
+    } else if(slidingDownWall()) {
+        jumpIP_ = false;
+        PhysicsComponent::velocity_.y += WALL_SLIDE_ACCELERATION;
+        if(PlayerPhysicsComponent::velocity_.y < MAX_WALL_SLIDE_VELOCITY) {
+            PlayerPhysicsComponent::velocity_.y = MAX_WALL_SLIDE_VELOCITY;
+        }
     } else {
+        jumpIP_ = true;
         PhysicsComponent::velocity_.y += WorldConstants::WORLD_GRAVITY_ACCELERATION;
     }
 
@@ -81,6 +98,10 @@ void PlayerPhysicsComponent::update(World& world) {
 
     // Set player position due to velocity changes
     PhysicsComponent::position_ += PhysicsComponent::velocity_;
+
+    // Let world set several variables
+    NormalPhysicsComponent::isOnGround_ = false;
+    wallAdjacent_ = false;
 
     // Resolve world collision
     world.resolveNormalCollision(this);
@@ -136,4 +157,8 @@ void PlayerPhysicsComponent::clearLeftRight() {
 
 bool PlayerPhysicsComponent::isIdle() {
     return !(walkingRight_ || walkingLeft_ || floatingRight_ || floatingLeft_);
+}
+
+bool PlayerPhysicsComponent::slidingDownWall() {
+    return wallAdjacent_ && !NormalPhysicsComponent::isOnGround_ && PhysicsComponent::velocity_.y < 0;
 }

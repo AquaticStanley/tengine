@@ -15,10 +15,15 @@ namespace CompConstants {
         constexpr double WALK_ACCELERATION_AIR = 1.0;
         constexpr double IDLE_X_ACCELERATION_GROUND = 1.0;
         constexpr double IDLE_X_ACCELERATION_AIR = 1.0;
-        constexpr double JUMP_VELOCITY = 15.0;
+        constexpr float JUMP_VELOCITY = 15.0;
+        const float DIAGONAL_JUMP_VELOCITY = std::sqrt((JUMP_VELOCITY * JUMP_VELOCITY) / 2);
         constexpr double WALK_TOP_SPEED = 10.0;
         constexpr double SOFT_CAP_DECELERATION = 0.30;
         constexpr double TERMINAL_VELOCITY = -15.0;
+        constexpr double WALL_SLIDE_ACCELERATION = -1.0;
+        constexpr double MAX_WALL_SLIDE_VELOCITY = -5.0;
+        const sf::Vector2f WALL_JUMP_VELOCITY_RIGHT = sf::Vector2f{DIAGONAL_JUMP_VELOCITY, DIAGONAL_JUMP_VELOCITY};
+        const sf::Vector2f WALL_JUMP_VELOCITY_LEFT = sf::Vector2f{-DIAGONAL_JUMP_VELOCITY, DIAGONAL_JUMP_VELOCITY};
         const std::string STANDING_TEXTURE = "Assets/grillStandingSprite.png";
 
         enum class Inputs {Left, Right, Jump, Up, Down};
@@ -36,6 +41,7 @@ public:
     , floatingLeft_(false)
     , jumpIP_(false)
     , jumping_(false)
+    , wallAdjacent_(false)
     {}
 
     virtual void update(World& world);
@@ -50,6 +56,7 @@ public:
     bool jumping_;
     bool facingUp_;
     bool facingDown_;
+    bool wallAdjacent_;
 
     PlayerAbilities abilities_;
 
@@ -64,6 +71,7 @@ public:
     void clearUpDown();
     void clearLeftRight();
     bool isIdle();
+    bool slidingDownWall();
 };
 
 class PlayerInputComponent : public InputComponent {
