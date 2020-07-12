@@ -59,8 +59,8 @@ void PlayerAbilities::applyActiveAbilities(PlayerPhysicsComponent* physics, Worl
     }
 }
 
-void PlayerAbilities::add_ability(CompConstants::Player::AbilityInputs input, Ability ability) {
-    // abilityKeybinds_[input] = 
-    (void)input;
-    (void)ability;
-}
+// void PlayerAbilities::add_ability(CompConstants::Player::AbilityInputs input, Ability ability) {
+//     // abilityKeybinds_[input] = 
+//     (void)input;
+//     (void)ability;
+// }

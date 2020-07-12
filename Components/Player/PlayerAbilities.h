@@ -37,5 +37,5 @@ private:
     std::unordered_map<CompConstants::Player::AbilityInputs, PlayerAbilityManager> abilities_;
 
     // This class should have means to add and move abilities between keybinds eventually.
-    void add_ability(CompConstants::Player::AbilityInputs input, Ability ability);
+    // void add_ability(CompConstants::Player::AbilityInputs input, Ability ability);
 };
